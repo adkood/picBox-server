@@ -1,7 +1,7 @@
 const fs = require("fs");
 const User = require("../models/userModel");
 const catchAsync = require("../utils/catchAsync");
-const AppError = require("../utils/AppError");
+const AppError = require("../utils/appError");
 const multer = require("multer");
 const sharp = require("sharp");
 
