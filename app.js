@@ -13,13 +13,18 @@ const GlobalErrorHandler = require("./controllers/errController");
 const userRouter = require("./routes/userRoutes");
 const photoRouter = require("./routes/photoRoutes");
 const paymentRouter = require("./routes/paymentRoutes");
-const bodyParser = require("body-parser");
+
+
 const { mongo } = require("mongoose");
 const cors = require("cors");
 const { pathToFileURL } = require("url");
 const { Router } = require("express");
 
 const app = express();
+
+var bodyParser = require('body-parser');
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 // const pathToFile = path.resolve(__dirname, '../public');
 // app.use(express.static("public"));

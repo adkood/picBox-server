@@ -31,6 +31,90 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   });
 });
 
+exports.getCheckoutSession_basic = catchAsync(async (req, res, next) => {
+  // 1) Get the image to purchase
+  const photo = await Photo.findById(req.params.photoId);
+
+  // 2) Create checkout session
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    success_url: `http://localhost:3000/planSuccess?plan=1`,
+    cancel_url: `${req.protocol}://${req.get("host")}`,
+    customer_email: req.user.email,
+    client_reference_id: req.params.photoId,
+    line_items: [
+      {
+        name: "Basic",
+        amount: 199 * 100,        
+        currency: "inr",
+        quantity: 1,
+      },
+    ],
+  });
+  
+  // 3) Create session as response
+  res.status(200).json({
+    status: "success",
+    session,
+  });
+});
+
+exports.getCheckoutSession_pro = catchAsync(async (req, res, next) => {
+  // 1) Get the image to purchase
+  const photo = await Photo.findById(req.params.photoId);
+
+  // 2) Create checkout session
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    success_url: `http://localhost:3000/success?plan=2`,
+    cancel_url: `${req.protocol}://${req.get("host")}`,
+    customer_email: req.user.email,
+    // client_reference_id: req.params.photoId,
+    line_items: [
+      {
+        name: "Pro",
+        amount: 599 * 100,        
+        currency: "inr",
+        quantity: 1,
+      },
+    ],
+  });
+  
+  // 3) Create session as response
+  res.status(200).json({
+    status: "success",
+    session,
+  });
+});
+
+exports.getCheckoutSession_premium = catchAsync(async (req, res, next) => {
+  // 1) Get the image to purchase
+  const photo = await Photo.findById(req.params.photoId);
+
+  // 2) Create checkout session
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    success_url: `http://localhost:3000/success?plan=3`,
+    cancel_url: `${req.protocol}://${req.get("host")}`,
+    customer_email: req.user.email,
+    // client_reference_id: req.params.photoId,
+    line_items: [
+      {
+        name: "Premium",
+        amount: 1099 * 100,        
+        currency: "inr",
+        quantity: 1,
+      },
+    ],
+  });
+  
+  // 3) Create session as response
+  res.status(200).json({
+    status: "success",
+    session,
+  });
+});
+
 // exports.onSuccessChanges = catchAsync(async (req, res, next) => {
 //   const url = window.location.href;
 //   console.log(url);

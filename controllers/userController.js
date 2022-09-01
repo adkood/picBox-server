@@ -73,7 +73,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   }
 
   // filter out the fields which you dont want to be updated
-  const filteredBody = filterObj(req.body, "name", "email", "profession","boughtImages");
+  const filteredBody = filterObj(req.body, "name", "email", "profession","boughtImages","planActive","planCount");
 
   //for adding profile picture
   if (req.file) {

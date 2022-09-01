@@ -20,7 +20,6 @@ const userSchema = new mongoose.Schema({
     default: "not mentioned",
   },
   img: {
-    
     data: Buffer,
   },
   boughtImages: [
@@ -57,6 +56,12 @@ const userSchema = new mongoose.Schema({
       message: "Passwords are not same!",
     },
   },
+  planActive: Boolean,
+  planCount: {
+    type: Number,
+    default: 0,
+  },
+
   changedPasswordAt: Date,
   passwordResetToken: String,
   passwordResetExpires: Date,
