@@ -84,7 +84,8 @@ exports.getFivePhotos = catchAsync(async (req, res, next) => {
 });
 
 exports.uploadPhoto = catchAsync(async (req, res, next) => {
-  // console.log(req.body);
+  console.log("*");
+  console.log(req.body);
 
   const doc = await Photo.create({
     title: req.body.title,

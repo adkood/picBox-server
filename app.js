@@ -13,6 +13,7 @@ const GlobalErrorHandler = require("./controllers/errController");
 const userRouter = require("./routes/userRoutes");
 const photoRouter = require("./routes/photoRoutes");
 const paymentRouter = require("./routes/paymentRoutes");
+const countRouter = require("./routes/countRoutes");
 
 
 const { mongo } = require("mongoose");
@@ -75,6 +76,7 @@ app.get("/", (req, res) => {
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/photo", photoRouter);
 app.use("/api/v1/payment" , paymentRouter);
+app.use("/api/v1/count", countRouter);
 
 //handling unhandled routes
 app.all("*", (req, res, next) => {
