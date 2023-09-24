@@ -14,6 +14,7 @@ const userRouter = require("./routes/userRoutes");
 const photoRouter = require("./routes/photoRoutes");
 const paymentRouter = require("./routes/paymentRoutes");
 const countRouter = require("./routes/countRoutes");
+const demandRouter = require("./routes/demandRoutes");
 
 
 const { mongo } = require("mongoose");
@@ -77,6 +78,7 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/photo", photoRouter);
 app.use("/api/v1/payment" , paymentRouter);
 app.use("/api/v1/count", countRouter);
+app.use("/api/v1/demand",demandRouter);
 
 //handling unhandled routes
 app.all("*", (req, res, next) => {
