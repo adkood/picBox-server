@@ -11,15 +11,50 @@ const CountSchema = new mongoose.Schema({
   },
   downloadedPhotoIds: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Photo", // Assuming you have a Photo model for storing photo details
-    },
+      _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Photo',
+      },
+      title: {
+        type: String,
+        default: 'Default Title',
+      },
+      size: {
+        type: String,
+        default: 'Default Size',
+      },
+      date: {
+        type: String,
+        default: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+      },
+    }
   ],
   transactionPhotoIds: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Photo", // Assuming you have a Photo model for storing photo details
-    },
+      _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Photo',
+      },
+      title: {
+        type: String,
+        default: 'Default Title',
+      },
+      size: {
+        type: String,
+        default: 'Default Size',
+      },
+      name: {
+        type: String,
+        default: 'Default Name',
+      },
+      price: {
+        type: Number,
+      },
+      date: {
+        type: String,
+        default: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+      },
+    }
   ],
   numberOfImagesPosted: {
     type: Number,

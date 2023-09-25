@@ -11,10 +11,10 @@ exports.createDocument = async (req, res) => {
     // Save the new document to the database
     await data.save();
 
-    res.json({ message: 'Document created successfully', document: data });
+    res.json({ message: "Document created successfully", document: data });
   } catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -32,36 +32,41 @@ exports.increaseDownloadCount = async (req, res) => {
   try {
     console.log("*");
     console.log(req.body);
-    const { photoId } = req.body;
+    const { photoId, title, size} = req.body;
     if (!photoId) {
       return res.status(400).json({ error: "Invalid photo ID provided" });
     }
     const data = await CountModel.findOne({});
-    data.downloadedPhotoIds.push(photoId);
+    // const date = new Date().toLocaleString("en-IN", {
+    //   timeZone: "Asia/Kolkata",
+    // });
+    data.downloadedPhotoIds.push({ _id: photoId, title, size});
     data.downloadCount += 1;
     await data.save();
-
   } catch (error) {
     console.log("Error:", error);
     res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
-exports.increaseTransactionCount = async (req, res) => {
-  try {
-    const { photoId } = req.body;
-    if (!photoId) {
-      return res.status(400).json({ error: "Invalid photo ID provided" });
-    }
-    const data = await CountModel.findOne({});
-    data.transactionPhotoIds.push(photoId);
-    data.transactionCount += 1;
-    await data.save();
-  } catch (error) {
-    console.log("Error:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-};
+// exports.increaseTransactionCount = async (req, res) => {
+//   try {
+
+//     if (!photoId) {
+//       return res.status(400).json({ error: "Invalid photo ID provided" });
+//     }
+//     const data = await CountModel.findOne({});
+//     // const date = new Date().toLocaleString("en-IN", {
+//     //   timeZone: "Asia/Kolkata",
+//     // });
+//     data.transactionPhotoIds.push({photoId,userId});
+//     data.transactionCount += 1;
+//     await data.save();
+//   } catch (error) {
+//     console.log("Error:", error);
+//     res.status(500).json({ error: "Internal Server Error" });
+//   }
+// };
 
 exports.increasePostCount = async (req, res) => {
   try {

@@ -8,7 +8,11 @@ const router = express.Router();
 
 router.route("/getFivePhotos").get(photoController.getFivePhotos);
 
-router.route("/search/:title").get(photoController.searchPhotos)
+router.route("/search/:title").get(photoController.searchPhotos);
+
+router
+  .route("/getAllPhotos")
+  .get(authController.protect, photoController.getAllPhotos);
 
 router
   .route("/")

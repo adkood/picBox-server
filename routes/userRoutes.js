@@ -34,11 +34,10 @@ router.patch(
 
 router.delete("/deleteMe", authController.protect, userController.deleteMe); //
 
-router.use(authController.protect, authController.restrictedTo("admin"));
-
-router.route("/").get(userController.getAllUsers); //
+// router.use(authController.protect, authController.restrictedTo("admin"));
+router.use(authController.protect);
+router.get("/",userController.getAllUsers); //
 // .post(userController.createUser);
-
 router
   .route("/:id")
   .get(userController.getUser) //

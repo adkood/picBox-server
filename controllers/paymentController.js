@@ -2,10 +2,17 @@ const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 const catchAsync = require("../utils/catchAsync");
 const User = require("../models/userModel");
 const Photo = require("../models/photoModel");
+const Count = require("../models/CountModel");
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // 1) Get the image to purchase
   const photo = await Photo.findById(req.params.photoId);
+
+  const _id = req.params.photoId;
+  const price = photo.price;
+  const title = photo.title;
+  const size = photo.size;
+  const name = photo.author[0].name;
 
   // 2) Create checkout session
   const session = await stripe.checkout.sessions.create({
@@ -24,6 +31,14 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     ],
   });
   
+  //----------------------Setting up transaction count things
+  const countData = await Count.findOne({});
+  countData.transactionPhotoIds.push({_id,title,size,name,price});
+  countData.transactionCount += 1;
+  await countData.save();
+
+  //---------------------------------------------------
+
   // 3) Create session as response
   res.status(200).json({
     status: "success",
