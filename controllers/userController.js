@@ -73,7 +73,16 @@ exports.updateMe = catchAsync(async (req, res, next) => {
   }
 
   // filter out the fields which you dont want to be updated
-  const filteredBody = filterObj(req.body, "name", "email", "profession","boughtImages","planActive","planCount","role");
+  const filteredBody = filterObj(
+    req.body,
+    "name",
+    "email",
+    "profession",
+    "boughtImages",
+    "planActive",
+    "planCount",
+    "role"
+  );
 
   //for adding profile picture
   if (req.file) {
@@ -108,7 +117,46 @@ exports.deleteMe = catchAsync(async (req, res, next) => {
   });
 });
 
+// exports.updateRole = async (req, res) => {
+//   const { userId } = req.body;
+//   console.log(userId);
+
+//   try {
+//     const data = await User.findById(userId);
+//     if (!data) {
+//       return res.status(404).json({ error: "Data not found" });
+//     }
+//     console.log(data);
+//     data.role = "admin";
+//     await data.save();
+
+//     return res.status(200).json(data);
+//   } catch (error) {
+//     return res.status(500).json(error);
+//   }
+// };
+
+exports.updateUser = catchAsync(async (req, res, next) => {
+  const newBody = await User.findById(req.params.id);
+  newBody.role = "admin";
+  const doc = await User.findByIdAndUpdate(req.params.id, newBody, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!doc) {
+    return next(new AppError("No document found with that ID", 404));
+  }
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      data: doc,
+    },
+  });
+});
+
 exports.getUser = factory.getOne(User);
 exports.getAllUsers = factory.getAll(User);
-exports.updateUser = factory.updateOne(User);
+// exports.updateUser = factory.updateOne(User);
 exports.deleteUser = factory.deleteOne(User);

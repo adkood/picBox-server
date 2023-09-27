@@ -36,6 +36,8 @@ router.delete("/deleteMe", authController.protect, userController.deleteMe); //
 
 // router.use(authController.protect, authController.restrictedTo("admin"));
 router.use(authController.protect);
+
+// router.put("/updateRole",userController.updateRole);
 router.get("/",userController.getAllUsers); //
 // .post(userController.createUser);
 router
