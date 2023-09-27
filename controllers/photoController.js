@@ -1,4 +1,5 @@
 const Photo = require("../models/photoModel");
+const Count = require("../models/CountModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const factory = require("../controllers/handlerFactory");
@@ -100,7 +101,12 @@ exports.uploadPhoto = catchAsync(async (req, res, next) => {
     author: [`${req.user.id}`],
   });
 
-  // console.log(doc);
+  //---------------------------handling post count-----
+  const countData = await Count.findOne({});
+  countData.numberOfImagesPosted += 1;
+  await countData.save();
+  //------------------------------------------
+  
   res.status(201).json({
     status: "success",
     data: {
