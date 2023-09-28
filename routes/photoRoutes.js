@@ -29,6 +29,6 @@ router.use(authController.protect);
 router
   .route("/:id")
   .patch(photoController.updatePhoto)
-  .delete(authController.restrictedTo("admin"), photoController.deletePhoto);
+  .delete(photoController.deletePhoto);
 
 module.exports = router;
