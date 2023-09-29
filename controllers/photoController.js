@@ -106,7 +106,7 @@ exports.uploadPhoto = catchAsync(async (req, res, next) => {
   countData.numberOfImagesPosted += 1;
   await countData.save();
   //------------------------------------------
-  
+
   res.status(201).json({
     status: "success",
     data: {
@@ -117,11 +117,11 @@ exports.uploadPhoto = catchAsync(async (req, res, next) => {
 
 exports.searchPhotos = catchAsync(async (req, res, next) => {
   var regex = new RegExp(req.params.title, "i");
-  // console.log(regex);
+  console.log(regex);
 
   let data = await Photo.find({ title: regex });
 
-  // console.log(data);
+  console.log(data);
 
   res.status(200).json({
     status: "success",
@@ -129,3 +129,16 @@ exports.searchPhotos = catchAsync(async (req, res, next) => {
     data,
   });
 });
+
+exports.sortPhoto = async (req, res) => {
+  try {
+    const { field, order } = req.query;
+    const sortOrder = order === "asc" ? 1 : -1;
+    const sortedData = await Photo.find().sort({ [field]: sortOrder });
+    res.json(sortedData);
+    console.log(res);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "server error" });
+  }
+};

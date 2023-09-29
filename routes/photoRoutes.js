@@ -25,6 +25,7 @@ router
 
 router.use(authController.protect);
 
+router.route("/sort").get(photoController.sortPhoto);
 // router.route("/").get(photoController.getPhoto);
 router
   .route("/:id")
