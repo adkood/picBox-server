@@ -3,6 +3,35 @@ const catchAsync = require("../utils/catchAsync");
 const User = require("../models/userModel");
 const Photo = require("../models/photoModel");
 const Count = require("../models/CountModel");
+const Cart = require("../models/CartModel");
+
+exports.getCartCheckoutSession = catchAsync(async (req, res, next) => {
+  // 1) Get the image to purchase
+  const userId = req.params.id;
+  var userCart = await Cart.findOne({ userId });
+
+  // 2) Create checkout session
+  const session = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    success_url: `http://localhost:3000/cartSuccess`,
+    cancel_url: `${req.protocol}://${req.get("host")}`,
+    client_reference_id: req.params.userId,
+    line_items: [
+      {
+        name: "Cart Items",
+        amount: userCart.cartAmount * 100,        
+        currency: "inr",
+        quantity: 1,
+      },
+    ],
+  });
+  
+  res.status(200).json({
+    status: "success",
+    session,
+  });
+});
+
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // 1) Get the image to purchase
