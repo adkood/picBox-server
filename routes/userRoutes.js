@@ -38,12 +38,16 @@ router.delete("/deleteMe", authController.protect, userController.deleteMe); //
 router.use(authController.protect);
 
 // router.put("/updateRole",userController.updateRole);
-router.get("/",userController.getAllUsers); //
+router.get("/", userController.getAllUsers); //
 // .post(userController.createUser);
+
+router.route("/cart/:id").patch(userController.updateCart);
+router.route("/cart/remove").patch(userController.removeFromCart);
+
 router
   .route("/:id")
   .get(userController.getUser) //
-  .patch(userController.updateUser) // 
+  .patch(userController.updateUser) //
   .delete(userController.deleteUser); //
 
 module.exports = router;

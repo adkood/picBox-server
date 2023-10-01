@@ -10,7 +10,7 @@ const photoSchema = new mongoose.Schema({
     data: Buffer,
   },
   size: {
-    type: String,
+    type: Number,
   },
   width: {
     type: String,

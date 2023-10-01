@@ -70,6 +70,35 @@ const userSchema = new mongoose.Schema({
     default: true,
     select: false,
   },
+  cart: [
+    {
+      _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Photo",
+      },
+      title: {
+        type: String,
+      },
+      size: {
+        type: Number,
+      },
+      name: {
+        type: String,
+      },
+      price: {
+        type: Number,
+      },
+      dicount: {
+        type: Number,
+      },
+      finalPrice: {
+        type: Number,
+      },
+    },
+  ],
+  cartAmount: {
+    type: Number,
+  },
 });
 
 userSchema.pre("save", async function (next) {
