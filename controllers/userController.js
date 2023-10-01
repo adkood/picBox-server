@@ -156,63 +156,6 @@ exports.updateUser = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.updateCart = catchAsync(async (req, res, next) => {
-  const { photoId, title, size, price, discount, newPrice } = req.body;
-  const newBody = await User.findById(req.params.id);
-
-  newBody.cart.push({
-    _id: photoId,
-    title,
-    size,
-    price,
-    discount,
-    finalPrice: newPrice,
-  });
-  newBody.cartAmount += newPrice;
-
-  const doc = await User.findByIdAndUpdate(req.params.id, newBody, {
-    new: true,
-    runValidators: true,
-  });
-
-  if (!doc) {
-    return next(new AppError("No document found with that ID", 404));
-  }
-
-  res.status(200).json({
-    status: "success",
-    data: {
-      data: doc,
-    },
-  });
-});
-
-exports.removeFromCart = catchAsync(async (req, res, next) => {
-  const { photoId,newPrice } = req.body;
-  const newBody = await User.findById(req.params.id);
-
-  const newCart = newBody.cart.filter(obj => obj._id !== photoId);
-  
-  newBody.cart = newCart;
-  newBody.cartAmount -= newPrice;
-
-  const doc = await User.findByIdAndUpdate(req.params.id, newBody, {
-    new: true,
-    runValidators: true,
-  });
-
-  if (!doc) {
-    return next(new AppError("No document found with that ID", 404));
-  }
-
-  res.status(200).json({
-    status: "success",
-    data: {
-      data: doc,
-    },
-  });
-});
-
 exports.getUser = factory.getOne(User);
 exports.getAllUsers = factory.getAll(User);
 // exports.updateUser = factory.updateOne(User);

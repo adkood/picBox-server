@@ -41,9 +41,6 @@ router.use(authController.protect);
 router.get("/", userController.getAllUsers); //
 // .post(userController.createUser);
 
-router.route("/cart/:id").patch(userController.updateCart);
-router.route("/cart/remove").patch(userController.removeFromCart);
-
 router
   .route("/:id")
   .get(userController.getUser) //

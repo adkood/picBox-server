@@ -70,35 +70,6 @@ const userSchema = new mongoose.Schema({
     default: true,
     select: false,
   },
-  cart: [
-    {
-      _id: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Photo",
-      },
-      title: {
-        type: String,
-      },
-      size: {
-        type: Number,
-      },
-      name: {
-        type: String,
-      },
-      price: {
-        type: Number,
-      },
-      dicount: {
-        type: Number,
-      },
-      finalPrice: {
-        type: Number,
-      },
-    },
-  ],
-  cartAmount: {
-    type: Number,
-  },
   createdAt: {
     type: String,
     default: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
