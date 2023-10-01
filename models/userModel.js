@@ -99,6 +99,10 @@ const userSchema = new mongoose.Schema({
   cartAmount: {
     type: Number,
   },
+  createdAt: {
+    type: String,
+    default: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+  },
 });
 
 userSchema.pre("save", async function (next) {

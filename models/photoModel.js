@@ -19,9 +19,8 @@ const photoSchema = new mongoose.Schema({
     type: String,
   },
   uploadedOn: {
-    type: Date,
-    default: Date.now(),
-    select: false,
+    type: String,
+    default: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
   },
   price: {
     type: Number,
