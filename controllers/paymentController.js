@@ -8,6 +8,7 @@ const Cart = require("../models/CartModel");
 exports.getCartCheckoutSession = catchAsync(async (req, res, next) => {
   // 1) Get the image to purchase
   const userId = req.params.id;
+  const name = req.params.name;
   var userCart = await Cart.findOne({ userId });
 
   // 2) Create checkout session
@@ -25,6 +26,18 @@ exports.getCartCheckoutSession = catchAsync(async (req, res, next) => {
       },
     ],
   });
+
+  const countData = await Count.findOne({});
+  const transactionDetails = userCart.cartData.map((cartItem) => ({
+    _id: cartItem._id,
+    title: cartItem.title,
+    size: cartItem.size,
+    name, 
+    price: cartItem.price,
+  }));
+  countData.transactionPhotoIds.push(...transactionDetails);
+  countData.transactionCount += userCart.cartData.length;
+  await countData.save();
   
   res.status(200).json({
     status: "success",

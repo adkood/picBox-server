@@ -10,6 +10,6 @@ router
   .get("/checkout-session-basic", paymentController.getCheckoutSession_basic)
   .get("/checkout-session-pro", paymentController.getCheckoutSession_pro)
   .get("/checkout-session-premium", paymentController.getCheckoutSession_premium)
-  .get("/checkout-session-cart/:id",paymentController.getCartCheckoutSession)
+  .get("/checkout-session-cart/:id/:name",paymentController.getCartCheckoutSession)
 
 module.exports = router;
