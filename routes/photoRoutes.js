@@ -10,6 +10,8 @@ router.route("/getFivePhotos").get(photoController.getFivePhotos);
 
 router.route("/search/:title").get(photoController.searchPhotos);
 
+router.route("/getBoughtPhotos").post(photoController.getPhotosInBoughtImages);
+
 router
   .route("/getAllPhotos")
   .get(authController.protect, photoController.getAllPhotos);

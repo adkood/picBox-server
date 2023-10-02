@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
   },
   boughtImages: [
     {
-      photoId: {
+      _id: {
         type: String,
       },
       boughtOn: {
@@ -72,7 +72,7 @@ const userSchema = new mongoose.Schema({
   },
   createdAt: {
     type: String,
-    default: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }),
+    default: new Date().toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
   },
 });
 

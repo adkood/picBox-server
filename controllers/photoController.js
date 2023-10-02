@@ -1,10 +1,12 @@
 const Photo = require("../models/photoModel");
+const User = require("../models/userModel");
 const Count = require("../models/CountModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const factory = require("../controllers/handlerFactory");
 const multer = require("multer");
 const fs = require("fs");
+const mongoose = require("mongoose");
 // const { count } = require("../models/photoModel");
 
 exports.getAllPhotos = factory.getAll(Photo);
@@ -140,5 +142,32 @@ exports.sortPhoto = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "server error" });
+  }
+};
+
+exports.getPhotosInBoughtImages = async (req, res) => {
+  try {
+    const { boughtImages } = req.body;
+
+    const photoIds = boughtImages.map((item) => mongoose.Types.ObjectId(item._id));
+    console.log(photoIds);
+
+    const filteredPhotoModels = await Photo.find({
+      _id: { $in: photoIds },
+    });
+
+    console.log(filteredPhotoModels);
+
+    return res.status(200).json({
+      success: true,
+      data: {
+        filteredPhotoModels,
+      },
+    });
+  } catch (error) {
+    console.error("Error:", error);
+    return res
+      .status(500)
+      .json({ success: false, message: "An error occurred" });
   }
 };

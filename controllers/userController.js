@@ -4,6 +4,7 @@ const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
 const multer = require("multer");
 const sharp = require("sharp");
+const Cart = require("../models/CartModel");
 
 const factory = require("../controllers/handlerFactory");
 
@@ -62,6 +63,8 @@ exports.getMe = (req, res, next) => {
 };
 
 exports.updateMe = catchAsync(async (req, res, next) => {
+
+  console.log("***");
   //Create error if user wants to change password
   if (req.body.password || req.body.passwordConfirm) {
     return next(
@@ -99,7 +102,7 @@ exports.updateMe = catchAsync(async (req, res, next) => {
     new: true,
     runValidators: true,
   });
-
+  // console.log(">"+updatedUser+"<");
   res.status(200).json({
     status: "success",
     data: {
